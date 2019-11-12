@@ -1,0 +1,54 @@
+"""
+This code is a helper code in situations where you have labelled only few set of images\
+from your image dataset and now wondering how to copy only those annotated images
+"""
+
+
+#list the items in a folder and then count the items
+#print number of items
+
+import os
+x = os.listdir("path to folder conataining annotations")
+y = os.listdir("path to folder conataining images")
+print("images: ",len(x))
+print("anns: ", len(y))
+
+
+#get all the names of images
+#get the names of annotation files
+image_names = []
+
+for images in x:
+  imname = images.split('.')
+  image_names.append(imname[0])
+  
+print(image_names)
+print(len(image_names))
+
+ann_names = []
+
+for ann in y:
+  ann = ann.split('.')
+  ann_names.append(ann[0])
+  
+print(ann_names)
+print(len(ann_names))
+
+#now compare and copy only those images which are annotated
+
+from shutil import copy
+
+for anns in ann_names:
+  if anns in image_names:
+    src = ("/content/gdrive/My Drive/tfod/models/research/object_detection/images/annotations_3_1comp/%s.xml"%anns) 
+    src2 = ("/content/gdrive/My Drive/tfod/models/research/object_detection/images/images_3_1comp/%s.jpg"%anns)
+    dst =("/content/gdrive/My Drive/tfod/models/research/object_detection/images/train")  #/%s.xml"%anns)
+    dst2 = ("/content/gdrive/My Drive/tfod/models/research/object_detection/images/train")  #/%s.jpg"%anns)
+    copy(src2,dst2)
+    copy(src, dst)
+    print(anns)
+    
+  else:
+    continue
+    
+print("done")
